@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+   
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&family=Lobster&family=Poppins:ital,wght@0,400;0,500;0,700;1,500&display=swap" rel="stylesheet">
+    
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Advice generator app</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    .attribution {
+       font-size: 14px;
+        text-align: center; 
+        color: hsl(193, 38%, 86%);
+    }
+    .attribution a { 
+      color: hsl(228, 45%, 44%);
+      text-decoration: none;
+    
+    }
+    body{
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background-color: hsl(217, 19%, 24%);
+    }
+    .container{
+      background-color: hsl(217, 19%, 38%);
+      padding: 40px 60px;
+      width: 300px;
+      margin: 0 auto;
+      margin-top: 4em;
+      border-radius: 10px;
+      height: 100%;
+      
+      box-shadow: 0 10px 15px hsl(217, 19%, 24%);
+      
+    }
+    img{
+      width: 100%;
+    }
+    .img{
+      width: 300px;
+      bottom: 0;
+ 
+
+    }
+
+    .advice_container{
+      text-align: center;
+     
+    }
+    h1{
+      color:hsl(193, 38%, 86%);
+      font-size: 2em;
+      font-weight: 600;
+      width:330px;
+    }
+    button{
+    cursor: pointer;
+     margin-top: -7em;
+     margin-bottom: 3em;
+     background-color:hsl(150, 100%, 66%);
+     outline: none;
+     border: none;
+     border-radius: 50%;
+     padding: 9px 12px;
+    }
+    button:hover{
+      background-color: hsl(193, 38%, 86%);
+      border:2px solid hsl(150, 100%, 66%);
+    }
+    button img{
+      width: 20px;
+    }
+    h3{
+      font-size: 1em;
+      padding: .6em;
+      color: hsl(150, 100%, 66%);
+      font-weight: 400;
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- Advice ID goes here -->
+  <div class="container">
+    <div class="advice_container">
+      <div class="advice">
+        <h3 id="advice-id">
+          Amazing Advice
+        </h3>
+      </div>
+     <div class="content" id="content">
+      <h1>click the button</h1>
+     </div>
+
+     
+    </div>
+   <img src="./images/pattern-divider-desktop.svg" srcset="./images/pattern-divider-mobile.svg" class="img" alt="">
+  </div>
+  <center>
+    <button onclick="showAdvice()"><img src="./images/icon-dice.svg" alt=""> </button>
+
+
+  </center>
+
+
+  <script>
+    const APIURL = "https://api.adviceslip.com/advice";
+    const hero = document.querySelector('.container');
+     
+    gsap.from(hero,{
+        duration: "2.5",
+        ease:"power2.out",
+        opacity: 0,
+        y:-500
+    })
+
+
+   async function getAdvice(){
+     try{
+       let res = await fetch(APIURL);
+       return await res.json()
+     }catch (err){ 
+      console.log(err)
+     }
+
+   }
+   async function showAdvice(){
+     let data = await getAdvice();
+     let advice_id = document.querySelector("#advice-id") 
+     let advice_text = document.querySelector("h1")
+     advice_id.innerText = "Advice " + "#" + data.slip.id
+     advice_text.innerText = '" ' + data.slip.advice + ' "'
+
+   }
+
+  </script>
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="https://github.com/franklinscripts">Okika Franklin</a>.
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+
+</body>
+</html>
